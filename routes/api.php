@@ -35,6 +35,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/drivers/{id}', [DriverController::class, 'update']);
     Route::delete('/drivers/{id}', [DriverController::class, 'destroy']);
 
+    Route::get('/filter-vehicles-by-category', [VehicleController::class, 'filterByCategory']);
+
     Route::get('/vehicles', [VehicleController::class, 'index']);
     Route::get('/vehicles/{id}', [VehicleController::class, 'show']);
     Route::post('/vehicles', [VehicleController::class, 'store']);

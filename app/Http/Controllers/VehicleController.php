@@ -45,7 +45,26 @@ class VehicleController extends Controller
 
         return response()->json($vehicles);
     }
+    public function filterByCategory(Request $request): JsonResponse
+    {
+        $validatedData = $request->validate([
+            'category_id' => 'required|exists:categories,id',
+        ]);
 
+        // Debugging: Check if category_id is correctly received
+        $categoryId = $validatedData['category_id'];
+        $vehicles = Vehicle::where('category_id', $categoryId)->get();
+
+        // Debugging: Check the query and results
+        \Log::info('Category ID: ' . $categoryId);
+        \Log::info('Vehicles: ', $vehicles->toArray());
+
+        if ($vehicles->isEmpty()) {
+            return response()->json(['message' => 'No vehicles found for the specified category.'], 404);
+        }
+
+        return response()->json($vehicles);
+    }
 
      public function index(): JsonResponse
      {
